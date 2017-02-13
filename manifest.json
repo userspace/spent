@@ -1,0 +1,15 @@
+{
+  "name": "Spent UserSpace",
+  "short_name": "Spent",
+  "description": "keep track of your money",
+  "start_url": "./?utm_source=web_app_manifest",
+  "display": "standalone",
+  "background_color": "blue",
+  "lang": "es-US",
+  "sign": "as12kjeoqiweu1lkjasd",
+  "icons": [{
+    "src": "/assets/img/favicon.png",
+    "sizes": "96x96",
+    "type": "image/png"
+  }]
+}
