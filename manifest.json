@@ -8,7 +8,7 @@
   "lang": "es-US",
   "sign": "as12kjeoqiweu1lkjasd",
   "icons": [{
-    "src": "/assets/img/favicon.png",
+    "src": "assets/img/favicon.png",
     "sizes": "96x96",
     "type": "image/png"
   }]
