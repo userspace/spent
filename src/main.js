@@ -7,7 +7,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import {watchLogin} from 'userspace-sdk-js'
 
 injectTapEventPlugin();
-watchLogin();
+watchLogin(localStorage);
 
 ReactDOM.render(
   <Root />,

@@ -33,8 +33,12 @@ class SpentFormClass extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    if (this.state.cost === '' && !(parseInt(this.state.cost) > 0)) return;
-    this.props.onSubmit({...this.state})
+    const data = {...this.state};
+    
+    if (data.cost === '' && !(parseInt(data.cost) > 0)) return;
+    data.cost = parseInt(data.cost)
+
+    this.props.onSubmit(data)
     this.setState( this.initialState() )
     this.firstInput.focus()
   }

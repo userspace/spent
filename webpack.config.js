@@ -6,8 +6,14 @@ module.exports = {
        './src/main.js'
      ],
      vendor : ["react","react-redux", "react-dom",
-      //  "rxjs", 
+      //  "rxjs",
        "core-js"]
+   },
+   node: {
+     fs: 'empty',
+     net: 'empty',
+     tls: 'empty',
+     child_process: 'empty'
    },
    output: {
      path: __dirname,
