@@ -29,7 +29,7 @@ class SpentGraphClass extends React.Component {
     [].concat(this.props.list)
       .reverse()
       .forEach( spent =>
-        values[monthAndDay(spent.when)] = spent.cost
+        values[monthAndDay(spent.when)] = spent.cost * spent.quantity
       );
 
     let total = 0;
