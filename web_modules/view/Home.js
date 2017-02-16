@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import connect from 'lib/connect'
 import { parse } from 'userspace-sdk-js'
 import { Link } from 'react-router'
-import { SpentForm, SpentList, SpentGraph } from 'view'
+import { SpentForm, SpentList, SpentGraph, Loading } from 'view'
 import moment from 'moment'
 
 moment.locale("es")
@@ -35,7 +35,8 @@ class HomeClass extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      list: []
+      list: [],
+      loading: true,
     }
     this.handleAdd = this.handleAdd.bind(this);
     this.handleIncrement = this.handleIncrement.bind(this);
@@ -51,45 +52,52 @@ class HomeClass extends React.Component {
 
   componentDidMount() {
     this.searchForLastSpentItems()
-      .then(list => this.setState({list}))
+      .then(list => this.setState({list, loading: false}))
   }
 
   handleAdd(data) {
-    new Spent()
+    this.setState({loading: true}, () => new Spent()
       .save({...data})
       .then(this.searchForLastSpentItems)
-      .then(list =>  this.setState({list}))
+      .then(list =>  this.setState({list, loading: false}))
+    )
   }
 
   handleIncrement(spent) {
-    Spent.createWithoutData(spent.id)
+    this.setState({loading: true}, () => Spent.createWithoutData(spent.id)
       .set("quantity", spent.quantity+1)
       .save()
       .then(this.searchForLastSpentItems)
-      .then(list =>  this.setState({list}))
+      .then(list =>  this.setState({list, loading: false}))
+    )
   }
 
   handleDecrement(spent) {
-    Spent.createWithoutData(spent.id)
+    this.setState({loading: true}, () => Spent.createWithoutData(spent.id)
       .set("quantity", spent.quantity-1)
       .save()
       .then(this.searchForLastSpentItems)
-      .then(list =>  this.setState({list}))
+      .then(list =>  this.setState({list, loading: false}))
+    )
   }
 
   handleRemove(spent) {
-    Spent.createWithoutData(spent.id)
+    this.setState({loading: true}, () => Spent.createWithoutData(spent.id)
       .destroy()
       .then(this.searchForLastSpentItems)
-      .then(list =>  this.setState({list}))
+      .then(list =>  this.setState({list, loading: false}))
+    )
   }
 
   render() {
-    return <Home list={this.state.list} add={this.handleAdd}
+    const home = <Home
+      list={this.state.list}
+      add={this.handleAdd}
       remove={this.handleRemove}
       increment={this.handleIncrement}
       decrement={this.handleDecrement}
-    />
+    />;
+    return this.state.loading ? <Loading>{home}</Loading> : home;
   }
 }
 
