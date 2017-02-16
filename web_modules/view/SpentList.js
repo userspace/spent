@@ -26,7 +26,7 @@ const SpentList = ({list, increment, decrement, remove}) =>
                             <i className="material-icons">add</i>
                           </button>
                           &nbsp;
-                          <button type="button" rel="tooltip" className="btn btn-warning" title="menos" onClick={()=>decrement(spent)}>
+                          <button type="button" rel="tooltip" className="btn btn-warning" title="menos" disabled={spent.quantity < 2} onClick={()=>decrement(spent)}>
                             <i className="material-icons">remove</i>
                           </button>
                       </td>
