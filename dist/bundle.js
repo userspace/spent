@@ -25,7 +25,7 @@ webpackJsonp([0],[
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _reactTapEventPlugin = __webpack_require__(1057);
+	var _reactTapEventPlugin = __webpack_require__(1058);
 	
 	var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 	
@@ -1083,7 +1083,7 @@ webpackJsonp([0],[
 	
 	var _reactRedux = __webpack_require__(552);
 	
-	var _store = __webpack_require__(1047);
+	var _store = __webpack_require__(1048);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -7456,7 +7456,7 @@ webpackJsonp([0],[
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.SpentGraph = exports.SpentList = exports.SpentForm = exports.Home = exports.App = undefined;
+	exports.Loading = exports.SpentGraph = exports.SpentList = exports.SpentForm = exports.Home = exports.App = undefined;
 	
 	var _App2 = __webpack_require__(403);
 	
@@ -7478,6 +7478,10 @@ webpackJsonp([0],[
 	
 	var _SpentGraph3 = _interopRequireDefault(_SpentGraph2);
 	
+	var _Loading2 = __webpack_require__(1047);
+	
+	var _Loading3 = _interopRequireDefault(_Loading2);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.App = _App3.default;
@@ -7485,6 +7489,7 @@ webpackJsonp([0],[
 	exports.SpentForm = _SpentForm3.default;
 	exports.SpentList = _SpentList3.default;
 	exports.SpentGraph = _SpentGraph3.default;
+	exports.Loading = _Loading3.default;
 
 /***/ },
 /* 403 */
@@ -7757,7 +7762,8 @@ webpackJsonp([0],[
 	    var _this = _possibleConstructorReturn(this, (HomeClass.__proto__ || Object.getPrototypeOf(HomeClass)).call(this, props));
 	
 	    _this.state = {
-	      list: []
+	      list: [],
+	      loading: true
 	    };
 	    _this.handleAdd = _this.handleAdd.bind(_this);
 	    _this.handleIncrement = _this.handleIncrement.bind(_this);
@@ -7777,7 +7783,7 @@ webpackJsonp([0],[
 	      var _this2 = this;
 	
 	      this.searchForLastSpentItems().then(function (list) {
-	        return _this2.setState({ list: list });
+	        return _this2.setState({ list: list, loading: false });
 	      });
 	    }
 	  }, {
@@ -7785,8 +7791,10 @@ webpackJsonp([0],[
 	    value: function handleAdd(data) {
 	      var _this3 = this;
 	
-	      new Spent().save(_extends({}, data)).then(this.searchForLastSpentItems).then(function (list) {
-	        return _this3.setState({ list: list });
+	      this.setState({ loading: true }, function () {
+	        return new Spent().save(_extends({}, data)).then(_this3.searchForLastSpentItems).then(function (list) {
+	          return _this3.setState({ list: list, loading: false });
+	        });
 	      });
 	    }
 	  }, {
@@ -7794,8 +7802,10 @@ webpackJsonp([0],[
 	    value: function handleIncrement(spent) {
 	      var _this4 = this;
 	
-	      Spent.createWithoutData(spent.id).set("quantity", spent.quantity + 1).save().then(this.searchForLastSpentItems).then(function (list) {
-	        return _this4.setState({ list: list });
+	      this.setState({ loading: true }, function () {
+	        return Spent.createWithoutData(spent.id).set("quantity", spent.quantity + 1).save().then(_this4.searchForLastSpentItems).then(function (list) {
+	          return _this4.setState({ list: list, loading: false });
+	        });
 	      });
 	    }
 	  }, {
@@ -7803,8 +7813,10 @@ webpackJsonp([0],[
 	    value: function handleDecrement(spent) {
 	      var _this5 = this;
 	
-	      Spent.createWithoutData(spent.id).set("quantity", spent.quantity - 1).save().then(this.searchForLastSpentItems).then(function (list) {
-	        return _this5.setState({ list: list });
+	      this.setState({ loading: true }, function () {
+	        return Spent.createWithoutData(spent.id).set("quantity", spent.quantity - 1).save().then(_this5.searchForLastSpentItems).then(function (list) {
+	          return _this5.setState({ list: list, loading: false });
+	        });
 	      });
 	    }
 	  }, {
@@ -7812,18 +7824,27 @@ webpackJsonp([0],[
 	    value: function handleRemove(spent) {
 	      var _this6 = this;
 	
-	      Spent.createWithoutData(spent.id).destroy().then(this.searchForLastSpentItems).then(function (list) {
-	        return _this6.setState({ list: list });
+	      this.setState({ loading: true }, function () {
+	        return Spent.createWithoutData(spent.id).destroy().then(_this6.searchForLastSpentItems).then(function (list) {
+	          return _this6.setState({ list: list, loading: false });
+	        });
 	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(Home, { list: this.state.list, add: this.handleAdd,
+	      var home = _react2.default.createElement(Home, {
+	        list: this.state.list,
+	        add: this.handleAdd,
 	        remove: this.handleRemove,
 	        increment: this.handleIncrement,
 	        decrement: this.handleDecrement
 	      });
+	      return this.state.loading ? _react2.default.createElement(
+	        _view.Loading,
+	        null,
+	        home
+	      ) : home;
 	    }
 	  }]);
 	
@@ -73306,7 +73327,7 @@ webpackJsonp([0],[
 	                                '\xA0',
 	                                _react2.default.createElement(
 	                                    'button',
-	                                    { type: 'button', rel: 'tooltip', className: 'btn btn-warning', title: 'menos', onClick: function onClick() {
+	                                    { type: 'button', rel: 'tooltip', className: 'btn btn-warning', title: 'menos', disabled: spent.quantity < 2, onClick: function onClick() {
 	                                            return decrement(spent);
 	                                        } },
 	                                    _react2.default.createElement(
@@ -73447,7 +73468,7 @@ webpackJsonp([0],[
 	    value: function componentDidUpdate() {
 	      var values = {};
 	      [].concat(this.props.list).reverse().forEach(function (spent) {
-	        return values[monthAndDay(spent.when)] = spent.cost;
+	        return values[monthAndDay(spent.when)] = spent.cost * spent.quantity;
 	      });
 	
 	      var total = 0;
@@ -73487,6 +73508,64 @@ webpackJsonp([0],[
 /* 1047 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(300);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(404);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Loading = function Loading(_ref) {
+	    var children = _ref.children;
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('div', { style: {
+	                width: "100%",
+	                height: "100%",
+	                position: "absolute",
+	                zIndex: 1001,
+	                left: 0,
+	                top: 0,
+	                backgroundColor: 'grey',
+	                opacity: .20
+	            } }),
+	        _react2.default.createElement('div', { style: { border: "16px solid #f3f3f3", /* Light grey */
+	                borderTop: "16px solid #3498db", /* Blue */
+	                borderRadius: "50%",
+	                width: "120px",
+	                height: "120px",
+	                left: "50%",
+	                position: "absolute",
+	                zIndex: 1002,
+	                top: "50%",
+	                animation: "spin 2s linear infinite"
+	            } }),
+	        _react2.default.createElement(
+	            'div',
+	            null,
+	            ' ',
+	            children,
+	            ' '
+	        )
+	    );
+	};
+	
+	exports.default = Loading;
+
+/***/ },
+/* 1048 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -73497,19 +73576,19 @@ webpackJsonp([0],[
 	
 	var _reactRouterRedux = __webpack_require__(394);
 	
-	var _reduxLogger = __webpack_require__(1048);
+	var _reduxLogger = __webpack_require__(1049);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
-	var _configureStore = __webpack_require__(1054);
+	var _configureStore = __webpack_require__(1055);
 	
 	var _configureStore2 = _interopRequireDefault(_configureStore);
 	
-	var _model = __webpack_require__(1055);
+	var _model = __webpack_require__(1056);
 	
 	var _model2 = _interopRequireDefault(_model);
 	
-	var _controller = __webpack_require__(1056);
+	var _controller = __webpack_require__(1057);
 	
 	var _controller2 = _interopRequireDefault(_controller);
 	
@@ -73545,7 +73624,7 @@ webpackJsonp([0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(295)))
 
 /***/ },
-/* 1048 */
+/* 1049 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -73556,11 +73635,11 @@ webpackJsonp([0],[
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _core = __webpack_require__(1049);
+	var _core = __webpack_require__(1050);
 	
-	var _helpers = __webpack_require__(1050);
+	var _helpers = __webpack_require__(1051);
 	
-	var _defaults = __webpack_require__(1053);
+	var _defaults = __webpack_require__(1054);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -73663,7 +73742,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 1049 */
+/* 1050 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -73676,9 +73755,9 @@ webpackJsonp([0],[
 	
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(1050);
+	var _helpers = __webpack_require__(1051);
 	
-	var _diff = __webpack_require__(1051);
+	var _diff = __webpack_require__(1052);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -73805,7 +73884,7 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 1050 */
+/* 1051 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -73829,7 +73908,7 @@ webpackJsonp([0],[
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 1051 */
+/* 1052 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -73839,7 +73918,7 @@ webpackJsonp([0],[
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(1052);
+	var _deepDiff = __webpack_require__(1053);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -73928,7 +74007,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 1052 */
+/* 1053 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -74357,7 +74436,7 @@ webpackJsonp([0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 1053 */
+/* 1054 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -74408,7 +74487,7 @@ webpackJsonp([0],[
 	module.exports = exports["default"];
 
 /***/ },
-/* 1054 */
+/* 1055 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -74440,7 +74519,7 @@ webpackJsonp([0],[
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 /***/ },
-/* 1055 */
+/* 1056 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -74468,17 +74547,17 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 1056 */
+/* 1057 */
 /***/ function(module, exports) {
 
 	"use strict";
 
 /***/ },
-/* 1057 */
+/* 1058 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {var invariant = __webpack_require__(306);
-	var defaultClickRejectionStrategy = __webpack_require__(1058);
+	var defaultClickRejectionStrategy = __webpack_require__(1059);
 	
 	var alreadyInjected = false;
 	
@@ -74500,14 +74579,14 @@ webpackJsonp([0],[
 	  alreadyInjected = true;
 	
 	  __webpack_require__(414).injection.injectEventPluginsByName({
-	    'TapEventPlugin':       __webpack_require__(1059)(shouldRejectClick)
+	    'TapEventPlugin':       __webpack_require__(1060)(shouldRejectClick)
 	  });
 	};
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(295)))
 
 /***/ },
-/* 1058 */
+/* 1059 */
 /***/ function(module, exports) {
 
 	module.exports = function(lastTouchEvent, clickTimestamp) {
@@ -74518,7 +74597,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 1059 */
+/* 1060 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -74542,14 +74621,14 @@ webpackJsonp([0],[
 	
 	"use strict";
 	
-	var EventConstants = __webpack_require__(1060);
+	var EventConstants = __webpack_require__(1061);
 	var EventPluginUtils = __webpack_require__(416);
 	var EventPropagators = __webpack_require__(413);
 	var SyntheticUIEvent = __webpack_require__(447);
-	var TouchEventUtils = __webpack_require__(1061);
+	var TouchEventUtils = __webpack_require__(1062);
 	var ViewportMetrics = __webpack_require__(448);
 	
-	var keyOf = __webpack_require__(1062);
+	var keyOf = __webpack_require__(1063);
 	var topLevelTypes = EventConstants.topLevelTypes;
 	
 	var isStartish = EventPluginUtils.isStartish;
@@ -74695,7 +74774,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 1060 */
+/* 1061 */
 /***/ function(module, exports) {
 
 	/**
@@ -74791,7 +74870,7 @@ webpackJsonp([0],[
 	module.exports = EventConstants;
 
 /***/ },
-/* 1061 */
+/* 1062 */
 /***/ function(module, exports) {
 
 	/**
@@ -74839,7 +74918,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 1062 */
+/* 1063 */
 /***/ function(module, exports) {
 
 	"use strict";
