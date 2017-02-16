@@ -1768,9 +1768,6 @@ div.dtr-modal div.dtr-modal-background {
     margin: 0;
   }
 }
-svg {
-  touch-action: none;
-}
 
 .jvectormap-container {
   width: 100%;
