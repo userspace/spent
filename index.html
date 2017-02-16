@@ -35,21 +35,16 @@
     </div>
 
     <script>
-        if (false)
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/service-worker.js', {
-                        scope: '/'
-                    })
-                    .then(function(registration) {
-                        console.log('Service Worker Registered');
-                    });
-                navigator.serviceWorker.ready.then(function(registration) {
-                    console.log('Service Worker Ready');
-                });
-            }
+        if (false) if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
+            .then(function(registration) {
+              console.log('Service Worker Registered');
+            });
+            navigator.serviceWorker.ready.then(function(registration) {
+              console.log('Service Worker Ready');
+            });
+        }
     </script>
-
-    <script src="assets/js/chartist.min.js"></script>
 
     <script type="text/javascript" src="dist/vendor.bundle.js" charset="utf-8"></script>
     <script type="text/javascript" src="dist/bundle.js" charset="utf-8"></script>
