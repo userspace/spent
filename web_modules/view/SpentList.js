@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import connect from 'lib/connect'
-import { Link } from 'react-router'
 import moment from 'moment'
 
 const SpentList = ({list, increment, decrement, remove}) =>

@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import connect from 'lib/connect'
-import { Link } from 'react-router'
 import moment from 'moment'
 
 class SpentFormClass extends React.Component {
@@ -34,7 +32,7 @@ class SpentFormClass extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     const data = {...this.state};
-    
+
     if (data.cost === '' && !(parseInt(data.cost) > 0)) return;
     data.cost = parseInt(data.cost)
 

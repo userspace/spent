@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import connect from 'lib/connect'
 import { parse } from 'userspace-sdk-js'
-import { Link } from 'react-router'
 import { SpentForm, SpentList, SpentGraph, Loading } from 'view'
 import moment from 'moment'
 
