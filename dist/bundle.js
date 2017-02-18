@@ -7967,15 +7967,20 @@ webpackJsonp([0],[
 	}();
 	
 	function isTokenStillValid(token) {
-	  var decoded = (0, _jwtDecode2.default)(token);
-	  if (!decoded.exp) return false;
-	  var date = new Date(0);
-	  date.setUTCSeconds(decoded.exp);
-	  return date.valueOf() > new Date().valueOf() + offsetSeconds * 1000;
+	  try {
+	    var decoded = (0, _jwtDecode2.default)(token);
+	    if (!decoded.exp) return false;
+	    var date = new Date(0);
+	    date.setUTCSeconds(decoded.exp);
+	    return date.valueOf() > new Date().valueOf() + offsetSeconds * 1000;
+	  }catch (e) {
+	    return false
+	  }
 	}
 	
 	function watchLogin(session) {
 	  var token = (window.location.search.match(/[?&]token=(.*)[#&]?/) || []).pop() || session.id_token;
+	  console.log('redirect', window.location.origin, window.location.pathname, window.location.origin + window.location.pathname, btoa(window.location.origin + window.location.pathname));
 	  if (!token || !isTokenStillValid(token)) window.location = 'https://gateway.user.space/sign/' + btoa(window.location.origin + window.location.pathname);
 	  session.id_token = token;
 	
@@ -8027,6 +8032,7 @@ webpackJsonp([0],[
 	exports.localToken = localToken;
 	exports.size = size;
 	exports.topapps = topapps;
+	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(295), __webpack_require__(552).Buffer))
 
 /***/ },
@@ -73106,7 +73112,7 @@ webpackJsonp([0],[
 	                { className: 'control-label' },
 	                'Success inputs'
 	              ),
-	              _react2.default.createElement('input', { type: 'number', autoFocus: true, tabIndex: '1', name: 'cost', value: this.state.cost, onChange: this.handleInputChange, placeholder: 'costo', className: 'form-control', ref: function ref(input) {
+	              _react2.default.createElement('input', { type: 'number', tabIndex: '1', name: 'cost', value: this.state.cost, onChange: this.handleInputChange, placeholder: 'costo', className: 'form-control', ref: function ref(input) {
 	                  return _this2.firstInput = input;
 	                } }),
 	              _react2.default.createElement('span', { className: 'material-input' })
