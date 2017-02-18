@@ -53,7 +53,7 @@ class SpentFormClass extends React.Component {
           <div className="col-md-4">
             <div className="form-group ">
                 <label className="control-label">Success inputs</label>
-                <input type="number" autoFocus tabIndex="1" name="cost" value={this.state.cost} onChange={this.handleInputChange} placeholder="costo" className="form-control" ref={(input) => this.firstInput = input}/>
+                <input type="number" tabIndex="1" name="cost" value={this.state.cost} onChange={this.handleInputChange} placeholder="costo" className="form-control" ref={(input) => this.firstInput = input}/>
                 <span className="material-input"></span>
             </div>
           </div>
