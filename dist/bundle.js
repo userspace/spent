@@ -73348,10 +73348,18 @@ webpackJsonp([0],[
 	  return (0, _moment2.default)(when, "YYYY-MM-DDTHH:mm:ss").format("MM-DD");
 	};
 	
+	var orDefault = function orDefault(value, def) {
+	  return !value ? def : value;
+	};
+	
+	var initialize = function initialize(values, spent) {
+	  return values[monthAndDay(spent.when)] = orDefault(values[monthAndDay(spent.when)], 0) + spent.cost * spent.quantity;
+	};
+	
 	var normalize = function normalize(list) {
 	  var values = {};
 	  [].concat(list).reverse().forEach(function (spent) {
-	    return values[monthAndDay(spent.when)] += spent.cost * spent.quantity;
+	    return initialize(values, spent);
 	  });
 	
 	  var total = 0;
