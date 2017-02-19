@@ -11,7 +11,7 @@ const normalize = list => {
   [].concat(list)
     .reverse()
     .forEach( spent =>
-      values[monthAndDay(spent.when)] = spent.cost * spent.quantity
+      values[monthAndDay(spent.when)] += spent.cost * spent.quantity
     );
 
   let total = 0;

@@ -73351,7 +73351,7 @@ webpackJsonp([0],[
 	var normalize = function normalize(list) {
 	  var values = {};
 	  [].concat(list).reverse().forEach(function (spent) {
-	    return values[monthAndDay(spent.when)] = spent.cost * spent.quantity;
+	    return values[monthAndDay(spent.when)] += spent.cost * spent.quantity;
 	  });
 	
 	  var total = 0;
