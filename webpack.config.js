@@ -34,8 +34,8 @@ module.exports = {
          exclude: /node_modules/,
          loaders: [
 //          'react-hot',
-          'babel?presets[]=react,presets[]=es2015,presets[]=stage-0'
+          'babel?presets[]=react,presets[]=es2015,presets[]=stage-1'
          ]
       }]
- }
+ }//"plugins": ["transform-class-properties"]
 }
