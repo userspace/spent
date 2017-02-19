@@ -73031,6 +73031,78 @@ webpackJsonp([0],[
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	var SpentForm = function SpentForm(_ref) {
+	  var handleSubmit = _ref.handleSubmit,
+	      handleInputChange = _ref.handleInputChange,
+	      spent = _ref.spent;
+	  return _react2.default.createElement(
+	    'form',
+	    { onSubmit: handleSubmit },
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-12 text-center' },
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'btn btn-danger' },
+	          'egreso'
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-4' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group ' },
+	          _react2.default.createElement(
+	            'label',
+	            { className: 'control-label' },
+	            'Success inputs'
+	          ),
+	          _react2.default.createElement('input', { type: 'number', tabIndex: '1', name: 'cost', value: spent.cost, onChange: handleInputChange, placeholder: 'costo', className: 'form-control' }),
+	          _react2.default.createElement('span', { className: 'material-input' })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-4' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group ' },
+	          _react2.default.createElement(
+	            'label',
+	            { className: 'control-label' },
+	            'Success input'
+	          ),
+	          _react2.default.createElement('input', { type: 'text', value: spent.name, name: 'name', tabIndex: '2', onChange: handleInputChange, placeholder: 'nombre', className: 'form-control' }),
+	          _react2.default.createElement('span', { className: 'material-input' })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-4' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group ' },
+	          _react2.default.createElement(
+	            'label',
+	            { className: 'control-label' },
+	            'Success input'
+	          ),
+	          _react2.default.createElement('input', { type: 'datetime-local', tabIndex: '3', name: 'when', value: spent.when, onChange: handleInputChange, placeholder: 'cuando', className: 'form-control' }),
+	          _react2.default.createElement('span', { className: 'material-input' })
+	        )
+	      )
+	    )
+	  );
+	};
+	
 	var SpentFormClass = function (_React$Component) {
 	  _inherits(SpentFormClass, _React$Component);
 	
@@ -73039,117 +73111,45 @@ webpackJsonp([0],[
 	
 	    var _this = _possibleConstructorReturn(this, (SpentFormClass.__proto__ || Object.getPrototypeOf(SpentFormClass)).call(this, props));
 	
-	    _this.handleInputChange = _this.handleInputChange.bind(_this);
-	    _this.handleSubmit = _this.handleSubmit.bind(_this);
-	    _this.state = _this.initialState();
-	    return _this;
-	  }
-	
-	  _createClass(SpentFormClass, [{
-	    key: 'initialState',
-	    value: function initialState() {
+	    _this.initialState = function () {
 	      return {
 	        cost: '',
 	        when: (0, _moment2.default)().format("YYYY-MM-DDTHH:mm:ss"),
 	        name: '',
 	        quantity: 1
 	      };
-	    }
-	  }, {
-	    key: 'handleInputChange',
-	    value: function handleInputChange(event) {
+	    };
+	
+	    _this.handleInputChange = function (event) {
 	      var target = event.target;
 	      var value = target.type === 'checkbox' ? target.checked : target.value;
 	      var name = target.name;
 	
-	      this.setState(_defineProperty({}, name, value));
-	    }
-	  }, {
-	    key: 'handleSubmit',
-	    value: function handleSubmit(e) {
+	      _this.setState(_defineProperty({}, name, value));
+	    };
+	
+	    _this.handleSubmit = function (e) {
 	      e.preventDefault();
-	      var data = _extends({}, this.state);
+	      var data = _extends({}, _this.state);
 	
 	      if (data.cost === '' && !(parseInt(data.cost) > 0)) return;
 	      data.cost = parseInt(data.cost);
 	
-	      this.props.onSubmit(data);
-	      this.setState(this.initialState());
-	      this.firstInput.focus();
-	    }
-	  }, {
+	      _this.props.onSubmit(data);
+	      _this.setState(_this.initialState);
+	    };
+	
+	    _this.state = _this.initialState();
+	    return _this;
+	  }
+	
+	  _createClass(SpentFormClass, [{
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        'form',
-	        { onSubmit: this.handleSubmit },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-md-12 text-center' },
-	            _react2.default.createElement(
-	              'button',
-	              { className: 'btn btn-danger' },
-	              'egreso'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-md-4' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'form-group ' },
-	              _react2.default.createElement(
-	                'label',
-	                { className: 'control-label' },
-	                'Success inputs'
-	              ),
-	              _react2.default.createElement('input', { type: 'number', tabIndex: '1', name: 'cost', value: this.state.cost, onChange: this.handleInputChange, placeholder: 'costo', className: 'form-control', ref: function ref(input) {
-	                  return _this2.firstInput = input;
-	                } }),
-	              _react2.default.createElement('span', { className: 'material-input' })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-md-4' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'form-group ' },
-	              _react2.default.createElement(
-	                'label',
-	                { className: 'control-label' },
-	                'Success input'
-	              ),
-	              _react2.default.createElement('input', { type: 'text', value: this.state.name, name: 'name', tabIndex: '2', onChange: this.handleInputChange, placeholder: 'nombre', className: 'form-control' }),
-	              _react2.default.createElement('span', { className: 'material-input' })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-md-4' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'form-group ' },
-	              _react2.default.createElement(
-	                'label',
-	                { className: 'control-label' },
-	                'Success input'
-	              ),
-	              _react2.default.createElement('input', { type: 'datetime-local', tabIndex: '3', name: 'when', value: this.state.when, onChange: this.handleInputChange, placeholder: 'cuando', className: 'form-control' }),
-	              _react2.default.createElement('span', { className: 'material-input' })
-	            )
-	          )
-	        )
-	      );
+	      return _react2.default.createElement(SpentForm, { spent: this.state,
+	        handleSubmit: this.handleSubmit,
+	        handleInputChange: this.handleInputChange
+	      });
 	    }
 	  }]);
 	

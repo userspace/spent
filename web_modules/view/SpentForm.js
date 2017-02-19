@@ -2,24 +2,52 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment'
 
+const SpentForm = ({handleSubmit, handleInputChange, spent}) =>
+<form onSubmit={handleSubmit} >
+  <div className="row">
+    <div className="col-md-12 text-center">
+      <button className="btn btn-danger">egreso</button>
+    </div>
+  </div>
+  <div className="row">
+    <div className="col-md-4">
+      <div className="form-group ">
+          <label className="control-label">Success inputs</label>
+          <input type="number" tabIndex="1" name="cost" value={spent.cost} onChange={handleInputChange} placeholder="costo" className="form-control" />
+          <span className="material-input"></span>
+      </div>
+    </div>
+    <div className="col-md-4">
+      <div className="form-group ">
+          <label className="control-label">Success input</label>
+          <input type="text" value={spent.name} name="name" tabIndex="2"  onChange={handleInputChange} placeholder="nombre" className="form-control" />
+          <span className="material-input"></span>
+      </div>
+    </div>
+    <div className="col-md-4">
+      <div className="form-group ">
+          <label className="control-label">Success input</label>
+          <input type="datetime-local" tabIndex="3" name="when" value={spent.when} onChange={handleInputChange} placeholder="cuando" className="form-control" />
+          <span className="material-input"></span>
+      </div>
+    </div>
+  </div>
+</form>
+
 class SpentFormClass extends React.Component {
   constructor(props) {
     super(props)
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = this.initialState()
   }
 
-  initialState() {
-    return {
-      cost: '',
-      when: moment().format("YYYY-MM-DDTHH:mm:ss"),
-      name: '',
-      quantity: 1,
-    }
-  }
+  initialState = () => ({
+    cost: '',
+    when: moment().format("YYYY-MM-DDTHH:mm:ss"),
+    name: '',
+    quantity: 1,
+  })
 
-  handleInputChange(event) {
+  handleInputChange = (event) => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
@@ -29,7 +57,7 @@ class SpentFormClass extends React.Component {
     });
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault()
     const data = {...this.state};
 
@@ -37,43 +65,14 @@ class SpentFormClass extends React.Component {
     data.cost = parseInt(data.cost)
 
     this.props.onSubmit(data)
-    this.setState( this.initialState() )
-    this.firstInput.focus()
+    this.setState( this.initialState )
   }
 
   render() {
-    return (
-      <form onSubmit={this.handleSubmit} >
-        <div className="row">
-          <div className="col-md-12 text-center">
-            <button className="btn btn-danger">egreso</button>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-4">
-            <div className="form-group ">
-                <label className="control-label">Success inputs</label>
-                <input type="number" tabIndex="1" name="cost" value={this.state.cost} onChange={this.handleInputChange} placeholder="costo" className="form-control" ref={(input) => this.firstInput = input}/>
-                <span className="material-input"></span>
-            </div>
-          </div>
-          <div className="col-md-4">
-            <div className="form-group ">
-                <label className="control-label">Success input</label>
-                <input type="text" value={this.state.name} name="name" tabIndex="2"  onChange={this.handleInputChange} placeholder="nombre" className="form-control" />
-                <span className="material-input"></span>
-            </div>
-          </div>
-          <div className="col-md-4">
-            <div className="form-group ">
-                <label className="control-label">Success input</label>
-                <input type="datetime-local" tabIndex="3" name="when" value={this.state.when} onChange={this.handleInputChange} placeholder="cuando" className="form-control" />
-                <span className="material-input"></span>
-            </div>
-          </div>
-        </div>
-      </form>
-    );
+    return <SpentForm spent={this.state}
+      handleSubmit={this.handleSubmit}
+      handleInputChange={this.handleInputChange}
+    />;
   }
 }
 
