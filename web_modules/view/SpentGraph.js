@@ -6,13 +6,16 @@ import ChartistGraph from 'react-chartist';
 const monthAndDay = when =>
   moment(when, "YYYY-MM-DDTHH:mm:ss").format("MM-DD")
 
+const orDefault = (value, def) => !value ? def : value;
+
+const initialize = (values, spent) =>
+  values[monthAndDay(spent.when)] = orDefault(values[monthAndDay(spent.when)], 0) + spent.cost * spent.quantity
+
 const normalize = list => {
   const values = {};
   [].concat(list)
     .reverse()
-    .forEach( spent =>
-      values[monthAndDay(spent.when)] += spent.cost * spent.quantity
-    );
+    .forEach( spent => initialize(values, spent) );
 
   let total = 0;
   return {
