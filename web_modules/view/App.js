@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Menu } from 'view';
 
 var App = ({children}) =>
-    <div className="section">
+    <div >
+      <Menu />
       {children}
     </div>
 
